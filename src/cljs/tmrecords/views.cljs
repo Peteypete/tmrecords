@@ -75,7 +75,7 @@
                      (::subs/numberofbronze r)]
                     [:td (::subs/totalnumber r)]]))]]
         (nodata-div))]))
-        
+
 
 
 (defn visualspread
@@ -181,11 +181,22 @@
     [:a {:href "#/about"} "About"]
     [:a#lastupdatedlnk (str "Last updated : " lastupd)]]))
 
+(rf/reg-sub
+  :records
+  (fn [db _]
+    (get-in db [:records])))
+
+(defn debug-show-state []
+   [:div ":atom state"
+    [:div "---Assumptions---"]
+    [:div "Authorized:  " (pr-str @(rf/subscribe [:records]))]])
 
 (defn home-panel
   "Render the home page"
   []
   [:div
+   "start"
+   [debug-show-state]
    [ranking]
    [score-table]
    (when (<sub [:user])
